@@ -22,6 +22,7 @@ class Creator
             $this->ClasseConexao();
             $this->ClassesControl();
             $this->classesView();
+            $this->criarIndex();
             $this->ClassesDao();
             $this->compactar();
             header("Location:index.php?msg=2");
@@ -508,6 +509,10 @@ HTML;
 HTML;
             file_put_contents("sistema/view/lista{$nomeTabelaUC}.php", $conteudo);
         }
+    }
+
+    function criarIndex()
+    {
         //página inicial
 
         $conteudo = <<<HTML
@@ -610,7 +615,7 @@ HTML;
         foreach ($this->tabelas as $tabela) {
             $nomeTabela = array_values((array)$tabela)[0];
             $nomeTabelaUC = ucfirst($nomeTabela);
-            $conteudo .= "<a href='./" . $nomeTabela . ".php' onclick='sumirComTexto()' target='conteudo-sistema'>Cadastro de " . $nomeTabelaUC . "</a>";
+            $conteudo .= "<a href='./view/" . $nomeTabela . ".php' onclick='sumirComTexto()' target='conteudo-sistema'>Cadastro de " . $nomeTabelaUC . "</a>";
         }
         $conteudo .= <<<HTML
             </ul>
@@ -622,7 +627,7 @@ HTML;
         foreach ($this->tabelas as $tabela) {
             $nomeTabela = array_values((array)$tabela)[0];
             $nomeTabelaUC = ucfirst($nomeTabela);
-            $conteudo .= "<a href='./lista" . $nomeTabela . ".php' onclick='sumirComTexto()' target='conteudo-sistema'>Relatório de " . $nomeTabelaUC . "</a>";
+            $conteudo .= "<a href='./view/lista" . $nomeTabela . ".php' onclick='sumirComTexto()' target='conteudo-sistema'>Relatório de " . $nomeTabelaUC . "</a>";
         }
         $conteudo .= <<<HTML
             </ul>
@@ -648,10 +653,8 @@ const sumirComTexto = () => {
 </html>
 
 HTML;
-        file_put_contents("sistema/view/index.html", $conteudo);
+        file_put_contents("sistema/index.html", $conteudo);
     }
 } //fimView
-
-
 
 new Creator();
